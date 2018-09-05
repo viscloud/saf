@@ -1,0 +1,8 @@
+676c676
+< $(DISTRIBUTE_DIR): all py | $(DISTRIBUTE_SUBDIRS)
+---
+> $(DISTRIBUTE_DIR): all | $(DISTRIBUTE_SUBDIRS)
+691c691
+< 	cp -r python $(DISTRIBUTE_DIR)/python
+---
+> 	# cp -r python $(DISTRIBUTE_DIR)/python

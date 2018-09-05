@@ -1,0 +1,58 @@
+# Copyright 2018 The SAF Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Configurations for cameras
+
+# Color bars
+[[camera]]
+name = "GST_TEST"
+video_uri = "gst://videotestsrc ! video/x-raw,width=640,height=480"
+width = 640
+height = 480
+
+#  Linux webcam
+[[camera]]
+name = "webcam-linux"
+video_uri = "gst://v4l2src ! capsfilter caps=video/x-raw,width=(int)640,height=(int)480,framerate=(fraction)30/1"
+# If the machine has multiple cameras, then you may need to specify the device.
+# video_uri = "gst://v4l2src device=/dev/video2 ! capsfilter caps=video/x-raw,width=(int)640,height=(int)480,framerate=(fraction)30/1"
+# If the camera produces JPEG images instead of raw pixels, then you will need
+# to use a JPEG decoder.
+# video_uri = "gst://v4l2src ! jpegdec ! capsfilter caps=video/x-raw,width=(int)640,height=(int)480,framerate=(fraction)30/1"
+width = 640
+height = 480
+
+[[camera]]
+name = "file"
+video_uri = "file://video.mp4"
+width = 640
+height = 480
+
+[[camera]]
+name = "rtsp"
+video_uri = "rtsp://username:password@camera_url"
+width = 640
+height = 480
+
+[[camera]]
+name = "ptgray"
+video_uri = "pgr://0"
+width = 1600
+height = 1200
+
+[[camera]]
+name = "vimba"
+video_uri = "vmb://0"
+width = 1600
+height = 1200

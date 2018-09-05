@@ -1,0 +1,36 @@
+[submodule "3rdparty/litesql"]
+	path = 3rdparty/litesql
+	url = https://github.com/louiz/litesql.git
+[submodule "3rdparty/tinytoml"]
+	path = 3rdparty/tinytoml
+	url = https://github.com/mayah/tinytoml.git
+[submodule "3rdparty/json"]
+	path = 3rdparty/json
+	url = https://github.com/nlohmann/json.git
+[submodule "3rdparty/zguide"]
+	path = 3rdparty/zguide
+	url = https://github.com/booksbyus/zguide.git
+[submodule "3rdparty/googletest"]
+	path = 3rdparty/googletest
+	url = https://github.com/google/googletest.git
+[submodule "3rdparty/simple-web-server"]
+	path = 3rdparty/simple-web-server
+	url = https://github.com/eidheim/Simple-Web-Server.git
+[submodule "3rdparty/dlib"]
+	path = 3rdparty/dlib
+	url = https://github.com/davisking/dlib.git
+[submodule "3rdparty/mqtt_cpp"]
+	path = 3rdparty/mqtt_cpp
+	url = https://github.com/redboltz/mqtt_cpp.git
+[submodule "3rdparty/nsync"]
+	path = 3rdparty/nsync
+	url = https://github.com/google/nsync.git
+[submodule "3rdparty/pyboostcvconverter"]
+	path = 3rdparty/pyboostcvconverter
+	url = https://github.com/Algomorph/pyboostcvconverter
+[submodule "3rdparty/librdkafka"]
+	path = 3rdparty/librdkafka
+	url = https://github.com/edenhill/librdkafka.git
+[submodule "3rdparty/rttr"]
+	path = 3rdparty/rttr
+	url = https://github.com/rttrorg/rttr.git

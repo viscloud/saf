@@ -1,0 +1,24 @@
+{
+  "pipeline_name": "DisplayExample",
+  "operators": [{
+      "operator_name": "Camera",
+      "operator_type": "Camera",
+      "parameters": {
+        "camera_name": "GST_TEST"
+      }
+    },
+    {
+      "operator_name": "Display",
+      "operator_type": "Display",
+      "parameters": {
+        "key": "original_image",
+        "angle": "0",
+        "size_ratio": "0.5",
+        "window_name": "Camera Stream"
+      },
+      "inputs": {
+        "input": "Camera:output"
+      }
+    }
+  ]
+}

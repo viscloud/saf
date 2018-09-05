@@ -1,0 +1,36 @@
+{
+  "pipeline_name": "ImageClassifierExample",
+  "operators": [{
+      "operator_name": "Camera",
+      "operator_type": "Camera",
+      "parameters": {
+        "camera_name": "GST_TEST"
+      }
+    },
+    {
+      "operator_name": "Transformer",
+      "operator_type": "ImageTransformer",
+      "parameters": {
+        "channel": "3",
+        "width": "227",
+        "height": "227",
+        "subtract_mean": "false"
+      },
+      "inputs": {
+        "input": "Camera"
+      }
+    },
+    {
+      "operator_name": "Classifier",
+      "operator_type": "ImageClassifier",
+      "parameters": {
+        "model": "googlenet",
+        "num_channels": "3",
+        "num_labels": "1"
+      },
+      "inputs": {
+        "input": "Transformer"
+      }
+    }
+  ]
+}

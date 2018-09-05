@@ -1,0 +1,24 @@
+8c8
+< # CPU_ONLY := 1
+---
+> CPU_ONLY := 1
+46c46
+< BLAS := atlas
+---
+> BLAS := open
+54,55c54,55
+< # BLAS_INCLUDE := $(shell brew --prefix openblas)/include
+< # BLAS_LIB := $(shell brew --prefix openblas)/lib
+---
+> BLAS_INCLUDE := $(shell brew --prefix openblas)/include
+> BLAS_LIB := $(shell brew --prefix openblas)/lib
+83,84c83,84
+< # PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
+< # PYTHON_LIB += $(shell brew --prefix numpy)/lib
+---
+> PYTHON_INCLUDE += $(dir $(shell python -c 'import numpy.core; print(numpy.core.__file__)'))/include
+> PYTHON_LIB += $(shell brew --prefix numpy)/lib
+103c103
+< DISTRIBUTE_DIR := distribute
+---
+> DISTRIBUTE_DIR := $(HOME)/installed_osx

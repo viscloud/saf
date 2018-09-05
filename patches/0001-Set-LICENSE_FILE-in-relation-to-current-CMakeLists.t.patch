@@ -1,0 +1,38 @@
+// Copyright 2018 The SAF Authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+From 1902945362525aad9fe2e8f3665e4ad6c5c9e9b1 Mon Sep 17 00:00:00 2001
+From: Christopher Canel <c.canel@icloud.com>
+Date: Fri, 4 May 2018 14:22:03 -0400
+Subject: [PATCH] Set LICENSE_FILE in relation to current CMakeLists.txt
+
+---
+ CMake/config.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMake/config.cmake b/CMake/config.cmake
+index 4483900..b293096 100644
+--- a/CMake/config.cmake
++++ b/CMake/config.cmake
+@@ -37,7 +37,7 @@ message("Project version: ${RTTR_VERSION_STR}")
+
+ # files
+ set(README_FILE "${CMAKE_SOURCE_DIR}/README.md")
+-set(LICENSE_FILE "${CMAKE_SOURCE_DIR}/LICENSE.txt")
++set(LICENSE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.txt")
+
+ # dirs where the binaries should be placed, installed
+ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
+--
+2.14.1

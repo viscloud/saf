@@ -1,0 +1,23 @@
+{
+  "pipeline_name": "FrameWriterExample",
+  "operators": [{
+      "operator_name": "Camera",
+      "operator_type": "Camera",
+      "parameters": {
+        "camera_name": "GST_TEST"
+      }
+    },
+    {
+      "operator_name": "Writer",
+      "operator_type": "FrameWriter",
+      "parameters": {
+        "format": "binary",
+        "output_dir": "/tmp/frame_writer/"
+      },
+      "inputs": {
+        "input": "Camera"
+      }
+    }
+
+  ]
+}
