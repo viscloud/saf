@@ -42,8 +42,8 @@ ARG SAF_HASH=
 
 # Prepare toolchain
 
-RUN apt-get update
-RUN apt-get install --yes --no-install-recommends dialog apt-utils
+RUN apt-get update && apt-get install --yes --no-install-recommends dialog \
+    apt-utils
 RUN apt-get install --yes --no-install-recommends build-essential
 RUN apt-get install --yes --no-install-recommends pkg-config
 RUN apt-get install --yes --no-install-recommends g++ wget cmake git vim
