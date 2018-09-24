@@ -19,6 +19,7 @@ into a deep neural network.
 SAF currently supports these DNN frameworks:
 * [TensorFlow](https://github.com/tensorflow/tensorflow)
 * [Intel Caffe](https://github.com/intel/caffe)
+* [OpenVINO](https://software.intel.com/en-us/openvino-toolkit)
 * [BVLC Caffe](https://github.com/BVLC/caffe)
 * [OpenCL Caffe](https://github.com/BVLC/caffe/tree/opencl)
 
