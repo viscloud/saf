@@ -63,29 +63,39 @@ void Operator::SetSink(const std::string& name, StreamPtr stream) {
 }
 
 StreamPtr Operator::GetSink(const std::string& name) {
+  std::string real_name = name;
   if (sinks_.find(name) == sinks_.end()) {
-    std::ostringstream msg;
-    msg << "Sink \"" << name << "\" does not exist for operator \""
-        << GetStringForOperatorType(GetType()) << "\". Available sinks: ";
-    for (const auto& s : sinks_) {
-      msg << s.first << " ";
+    if ((name == "output") && (sinks_.find("output0") != sinks_.end())) {
+      real_name = "output0";
+    } else {
+      std::ostringstream msg;
+      msg << "Sink \"" << name << "\" does not exist for operator \""
+          << GetStringForOperatorType(GetType()) << "\". Available sinks: ";
+      for (const auto& s : sinks_) {
+        msg << s.first << " ";
+      }
+      throw std::runtime_error(msg.str());
     }
-    throw std::runtime_error(msg.str());
   }
-  return sinks_.at(name);
+  return sinks_.at(real_name);
 }
 
 void Operator::SetSource(const std::string& name, StreamPtr stream) {
+  std::string real_name = name;
   if (sources_.find(name) == sources_.end()) {
-    std::ostringstream msg;
-    msg << "Source \"" << name << "\" does not exist for operator \""
-        << GetStringForOperatorType(GetType()) << "\". Available sources: ";
-    for (const auto& s : sources_) {
-      msg << s.first << " ";
+    if ((name == "input") && (sources_.find("input0") != sources_.end())) {
+      real_name = "input0";
+    } else {
+      std::ostringstream msg;
+      msg << "Source \"" << name << "\" does not exist for operator \""
+          << GetStringForOperatorType(GetType()) << "\". Available sources: ";
+      for (const auto& s : sources_) {
+        msg << s.first << " ";
+      }
+      throw std::runtime_error(msg.str());
     }
-    throw std::runtime_error(msg.str());
   }
-  sources_[name] = stream;
+  sources_[real_name] = stream;
 }
 
 bool Operator::Start(size_t buf_size) {
