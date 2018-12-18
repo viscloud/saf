@@ -148,9 +148,6 @@ bool VimbaCamera::Init() {
   // Now we have a Vimba camera handle
   StartCapture();
 
-  // Reset to default camera settings
-  ResetDefaultCameraSettings();
-
   return true;
 }
 
