@@ -86,6 +86,9 @@ class Camera : public Operator {
   virtual bool Init() override = 0;
   virtual bool OnStop() override = 0;
   virtual void Process() override = 0;
+  // Override PushFrame() to check that frames are the expected dimensions.
+  virtual void PushFrame(const std::string& sink_name,
+                         std::unique_ptr<Frame> frame) override;
 
  protected:
   std::string name_;

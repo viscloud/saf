@@ -145,7 +145,8 @@ class Operator {
 
   std::unique_ptr<Frame> GetFrame(const std::string& source_name);
   std::unique_ptr<Frame> GetFrameDirect(const std::string& source_name);
-  void PushFrame(const std::string& sink_name, std::unique_ptr<Frame> frame);
+  virtual void PushFrame(const std::string& sink_name,
+                         std::unique_ptr<Frame> frame);
   void OperatorLoop();
   void OperatorLoopDirect();
 
