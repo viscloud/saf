@@ -115,3 +115,20 @@ void Camera::MoveUp() { ExecuteAndCheck(tile_up_command_ + " &"); }
 void Camera::MoveDown() { ExecuteAndCheck((tile_down_command_ + " &")); }
 void Camera::MoveLeft() { ExecuteAndCheck((pan_left_command_ + " &")); }
 void Camera::MoveRight() { ExecuteAndCheck((pan_right_command_ + " &")); }
+
+void Camera::PushFrame(const std::string& sink_name,
+                       std::unique_ptr<Frame> frame) {
+  auto img = frame->GetValue<cv::Mat>("original_image");
+  int actual_width = img.cols;
+  int actual_height = img.rows;
+  int expected_width = GetWidth();
+  int expected_height = GetHeight();
+  if ((actual_width != expected_width) || (actual_height != expected_height)) {
+    LOG(ERROR) << "Actual dimensions of frame "
+               << frame->GetValue<unsigned long>(Frame::kFrameIdKey) << " ("
+               << actual_width << " x " << actual_height
+               << ") do not match expected frame dimensions (" << expected_width
+               << " x " << expected_height << ")!";
+  }
+  Operator::PushFrame(sink_name, std::move(frame));
+}
