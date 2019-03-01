@@ -19,10 +19,11 @@
 constexpr auto SOURCE_NAME = "input";
 constexpr auto SINK_NAME = "output";
 
-FlowControlEntrance::FlowControlEntrance(unsigned int max_tokens)
+FlowControlEntrance::FlowControlEntrance(unsigned int max_tokens, bool block)
     : Operator(OPERATOR_TYPE_FLOW_CONTROL_ENTRANCE, {SOURCE_NAME}, {SINK_NAME}),
       max_tokens_(max_tokens),
-      num_tokens_available_(max_tokens) {}
+      num_tokens_available_(max_tokens),
+      block_(block) {}
 
 std::shared_ptr<FlowControlEntrance> FlowControlEntrance::Create(
     const FactoryParamsType& params) {
@@ -44,7 +45,11 @@ StreamPtr FlowControlEntrance::GetSink() {
 
 bool FlowControlEntrance::Init() { return true; }
 
-bool FlowControlEntrance::OnStop() { return true; }
+bool FlowControlEntrance::OnStop() {
+  std::unique_lock<std::mutex> lock(mtx_);
+  block_cv_.notify_one();
+  return true;
+}
 
 void FlowControlEntrance::Process() {
   auto frame = GetFrame(SOURCE_NAME);
@@ -57,11 +62,22 @@ void FlowControlEntrance::Process() {
   // Used to minimize the length of the critical section.
   bool push = false;
   {
-    std::lock_guard<std::mutex> guard(mtx_);
+    std::unique_lock<std::mutex> lock(mtx_);
+    if (block_) {
+      // Wait until a token is available.
+      block_cv_.wait(lock,
+                     [this] { return stopped_ || num_tokens_available_ > 0; });
+      if (stopped_) {
+        return;
+      }
+    }
     if (num_tokens_available_) {
       frames_with_tokens_.insert(id);
       --num_tokens_available_;
       push = true;
+    } else if (block_) {
+      LOG(ERROR) << "FlowControlEntrance attempting to drop a frame while in "
+                    "\"block\" mode!";
     }
   }
 
@@ -74,7 +90,7 @@ void FlowControlEntrance::Process() {
 }
 
 void FlowControlEntrance::ReturnToken(unsigned long frame_id) {
-  std::lock_guard<std::mutex> guard(mtx_);
+  std::unique_lock<std::mutex> lock(mtx_);
   if (frames_with_tokens_.find(frame_id) == frames_with_tokens_.end()) {
     LOG(INFO) << "Frame " << frame_id
               << " releasing token that was not issued.";
@@ -82,6 +98,12 @@ void FlowControlEntrance::ReturnToken(unsigned long frame_id) {
     frames_with_tokens_.erase(frame_id);
 
     ++num_tokens_available_;
+
+    if (block_) {
+      // If we are in blocking mode, then wake up the Process() function.
+      block_cv_.notify_one();
+    }
+
     if (num_tokens_available_ > max_tokens_) {
       throw std::runtime_error(
           "More flow control tokens have been returned than were distributed.");

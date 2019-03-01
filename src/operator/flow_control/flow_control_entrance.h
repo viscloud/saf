@@ -15,6 +15,7 @@
 #ifndef SAF_OPERATOR_FLOW_CONTROL_FLOW_CONTROL_ENTRANCE_H_
 #define SAF_OPERATOR_FLOW_CONTROL_FLOW_CONTROL_ENTRANCE_H_
 
+#include <condition_variable>
 #include <memory>
 #include <mutex>
 
@@ -28,8 +29,10 @@ class FlowControlEntrance : public Operator {
  public:
   // "max_tokens" should not be larger than the capacity of the shortest stream
   // queue in the flow control domain. This is to ensure that no frames are
-  // dropped due to queue overflow.
-  FlowControlEntrance(unsigned int max_tokens);
+  // dropped due to queue overflow. If "block" is true, then the
+  // FlowControlEntrance will block if there are insufficient tokens, otherwise
+  // it will drop frames.
+  FlowControlEntrance(unsigned int max_tokens, bool block = true);
   void ReturnToken(unsigned long frame_id);
   static std::shared_ptr<FlowControlEntrance> Create(
       const FactoryParamsType& params);
@@ -50,8 +53,12 @@ class FlowControlEntrance : public Operator {
   // of tokens.
   unsigned int max_tokens_;
   unsigned int num_tokens_available_;
+  // Whether to block when there are insufficient tokens.
+  bool block_;
   // IDs of frame with tokens
   std::unordered_set<unsigned long> frames_with_tokens_;
+  // Used in blocking mode to wait for tokens.
+  std::condition_variable block_cv_;
   std::mutex mtx_;
 };
 
