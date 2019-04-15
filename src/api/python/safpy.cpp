@@ -534,10 +534,10 @@ BOOST_PYTHON_MODULE(safpy) {
   import_array();
 
   def("GetInstance", GetInstance, GetInstance_overloads());
-  def("SetDeviceNumber", &SafPython::SetDeviceNumber);
 
   class_<SafPython, std::shared_ptr<SafPython>, boost::noncopyable>("Saf",
                                                                     no_init)
+      .def("SetDeviceNumber", &SafPython::SetDeviceNumber)
       .def("StopAndClean", &SafPython::StopAndClean)
       .def("Start", &SafPython::Start)
       .def("Stop", &SafPython::Stop)
